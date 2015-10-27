@@ -25,7 +25,7 @@ public abstract class BaseFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         if (enableToolbar()) {
             getBaseActivity().getToolbar().setVisibility(View.VISIBLE);
-            getBaseActivity().getToolbar().setTitle(getTitle());
+            getBaseActivity().getSupportActionBar().setTitle(getTitle());
         } else {
             getBaseActivity().getToolbar().setVisibility(View.GONE);
         }
