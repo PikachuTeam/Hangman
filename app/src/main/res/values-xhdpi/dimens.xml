@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="guess_area">70dp</dimen>
+
+    <dimen name="keys_size">35dp</dimen>
+    <dimen name="keys_text_size">25dp</dimen>
+    <dimen name="keys_margin">2dp</dimen>
+
+    <dimen name="hangman_area_width">250dp</dimen>
+
+    <dimen name="dialog_notify_button_height">25dp</dimen>
+    <dimen name="dialog_notify_width">250dp</dimen>
+    <dimen name="dialog_notify_title_area_height">40dp</dimen>
+    <dimen name="dialog_notify_button_area_height">30dp</dimen>
+
+    <dimen name="text_size_1">15dp</dimen>
+    <dimen name="text_size_2">16dp</dimen>
+    <dimen name="text_size_3">17dp</dimen>
+    <dimen name="text_size_4">18dp</dimen>
+    <dimen name="text_size_5">19dp</dimen>
+    <dimen name="text_size_6">20dp</dimen>
+    <dimen name="text_size_7">21dp</dimen>
+    <dimen name="text_size_8">22dp</dimen>
+    <dimen name="text_size_9">23dp</dimen>
+    <dimen name="text_size_10">24dp</dimen>
+    <dimen name="text_size_11">25dp</dimen>
+    <dimen name="text_size_12">26dp</dimen>
+    <dimen name="text_size_13">27dp</dimen>
+    <dimen name="text_size_14">28dp</dimen>
+    <dimen name="text_size_15">29dp</dimen>
+
+    <dimen name="margin_1">3dp</dimen>
+    <dimen name="margin_2">4dp</dimen>
+    <dimen name="margin_3">5dp</dimen>
+    <dimen name="margin_4">6dp</dimen>
+    <dimen name="margin_5">7dp</dimen>
+    <dimen name="margin_6">8dp</dimen>
+    <dimen name="margin_7">9dp</dimen>
+    <dimen name="margin_8">10dp</dimen>
+    <dimen name="margin_9">11dp</dimen>
+    <dimen name="margin_10">12dp</dimen>
+</resources>

@@ -1,4 +1,41 @@
 <resources>
     <string name="app_name">Hangman</string>
     <string name="action_settings">Settings</string>
+
+    <string-array name="keyboard">
+        <item>Q</item>
+        <item>W</item>
+        <item>E</item>
+        <item>R</item>
+        <item>T</item>
+        <item>Y</item>
+        <item>U</item>
+        <item>I</item>
+        <item>O</item>
+        <item>P</item>
+        <item>A</item>
+        <item>S</item>
+        <item>D</item>
+        <item>F</item>
+        <item>G</item>
+        <item>H</item>
+        <item>J</item>
+        <item>K</item>
+        <item>L</item>
+        <item>Z</item>
+        <item>X</item>
+        <item>C</item>
+        <item>V</item>
+        <item>B</item>
+        <item>N</item>
+        <item>M</item>
+    </string-array>
+
+    <string name="score">Your score: {0}</string>
+    <string name="topic">Topic: {0}</string>
+
+    <string name="dialog_title">{0}</string>
+    <string name="dialog_word">Word: {0}</string>
+    <string name="dialog_notify_button_play_again">Play again</string>
+    <string name="dialog_notify_button_next">Next</string>
 </resources>

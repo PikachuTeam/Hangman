@@ -3,4 +3,12 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+
+    <color name="correct_keys">#43A047</color>
+    <color name="wrong_keys">#E53935</color>
+
+    <color name="dialog_notify_title_area">#009688</color>
 </resources>
