@@ -24,20 +24,19 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     }
 
     @Override
-    protected String getTitle() {
-        return "Aloha";
+    protected boolean enableToolbar() {
+        return false;
     }
 
     private void findViews(View rootView) {
         buttonPlay = rootView.findViewById(R.id.buttonPlay);
-
         buttonPlay.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         if (v == buttonPlay) {
-            Toast.makeText(getActivity(), "Alohha", Toast.LENGTH_SHORT).show();
+            replaceFragment(new TopicFragment());
         }
     }
 }

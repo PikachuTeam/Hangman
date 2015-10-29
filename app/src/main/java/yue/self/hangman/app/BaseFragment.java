@@ -28,6 +28,8 @@ public abstract class BaseFragment extends Fragment {
             getBaseActivity().getSupportActionBar().setTitle(getTitle());
         } else {
             getBaseActivity().getToolbar().setVisibility(View.GONE);
+            getBaseActivity().getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
+            getBaseActivity().getSupportActionBar().setDisplayHomeAsUpEnabled(enableButtonBack());
         }
     }
 
@@ -41,6 +43,10 @@ public abstract class BaseFragment extends Fragment {
 
     protected boolean enableToolbar() {
         return true;
+    }
+
+    protected boolean enableButtonBack() {
+        return false;
     }
 
     public BaseActivity getBaseActivity() {
