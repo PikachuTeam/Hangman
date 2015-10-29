@@ -30,3 +30,4 @@ proguard/
 /captures
 .DS_Store
 *.iml
+app/src/main/assets/hangman.sqlite

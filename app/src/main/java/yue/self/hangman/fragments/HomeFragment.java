@@ -37,7 +37,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if (v == buttonPlay) {
-            Toast.makeText(getActivity(), "Alohha", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getActivity(), "Alohha", Toast.LENGTH_SHORT).show();
         }
     }
+
 }
