@@ -1,9 +1,12 @@
 package yue.self.hangman.database;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
+
+import yue.self.hangman.entity.Question;
 
 /**
  * Created by ThanhNH on 2/1/2015.
@@ -51,9 +54,21 @@ public class DataSource {
         instance = null;
     }
 
-    public ArrayList<String> getTopics(){
-        ArrayList<String> topics=new ArrayList<>();
+    public ArrayList<String> getTopics() {
+        ArrayList<String> topics = new ArrayList<>();
+        Cursor cursor = sqLiteDatabase.rawQuery("select * from sqlite_sequence", null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            topics.add(cursor.getString(0));
+            cursor.moveToNext();
+        }
         return topics;
     }
 
+    public Question getQuestion(String topic) {
+        Cursor cursor = sqLiteDatabase.rawQuery("select * from " + topic + " order by random() limit 1", null);
+        cursor.moveToFirst();
+        Question question = new Question(cursor.getString(0), "Unknown");
+        return question;
+    }
 }

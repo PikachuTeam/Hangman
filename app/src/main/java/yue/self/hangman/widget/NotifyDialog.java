@@ -26,8 +26,6 @@ public class NotifyDialog extends Dialog implements View.OnClickListener {
     private TextView textViewWord;
     private LinearLayout buttonPlayAgain;
     private LinearLayout buttonNext;
-    private int state;
-    private String word;
     private OnNotifyDialogButtonClickListener listener;
 
     private void findViews() {
@@ -41,12 +39,10 @@ public class NotifyDialog extends Dialog implements View.OnClickListener {
         buttonNext.setOnClickListener(this);
     }
 
-    public NotifyDialog(Context context, int state, String word) {
+    public NotifyDialog(Context context) {
         super(context);
         this.context = context;
         view = View.inflate(this.context, R.layout.dialog_notify, null);
-        this.state = state;
-        this.word = word;
     }
 
     public void setOnNotifyDialogButtonClickListener(OnNotifyDialogButtonClickListener listener) {
@@ -59,30 +55,14 @@ public class NotifyDialog extends Dialog implements View.OnClickListener {
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(view);
+        setCanceledOnTouchOutside(false);
 
         findViews();
-
-        switch (this.state) {
-            case 1: // lose
-                textViewDialogTitle.setText(MessageFormat.format(context.getString(R.string.dialog_title), "Sorry!"));
-                textViewStatus.setText("You lose");
-                buttonNext.setVisibility(View.GONE);
-                buttonPlayAgain.setVisibility(View.VISIBLE);
-                break;
-            case 2: // win
-                textViewDialogTitle.setText(MessageFormat.format(context.getString(R.string.dialog_title), "Congratulation!"));
-                textViewStatus.setText("You win");
-                buttonNext.setVisibility(View.VISIBLE);
-                buttonPlayAgain.setVisibility(View.GONE);
-                break;
-        }
-
-        textViewWord.setText(MessageFormat.format(context.getString(R.string.dialog_word), word));
     }
 
-    public void changeState(int state) {
-        this.state = state;
-        switch (this.state) {
+    public void show(int state,String word){
+        show();
+        switch (state) {
             case 1: // lose
                 textViewDialogTitle.setText(MessageFormat.format(context.getString(R.string.dialog_title), "Sorry!"));
                 textViewStatus.setText("You lose");
@@ -96,6 +76,7 @@ public class NotifyDialog extends Dialog implements View.OnClickListener {
                 buttonPlayAgain.setVisibility(View.GONE);
                 break;
         }
+        textViewWord.setText(MessageFormat.format(context.getString(R.string.dialog_word), word));
     }
 
     @Override

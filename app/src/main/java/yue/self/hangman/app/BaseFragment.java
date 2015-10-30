@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import yue.self.hangman.R;
 
@@ -15,6 +16,12 @@ import yue.self.hangman.R;
  * Created by dongc_000 on 10/19/2015.
  */
 public abstract class BaseFragment extends Fragment {
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -27,10 +34,10 @@ public abstract class BaseFragment extends Fragment {
         if (enableToolbar()) {
             getBaseActivity().getToolbar().setVisibility(View.VISIBLE);
             getBaseActivity().getSupportActionBar().setTitle(getTitle());
+            getBaseActivity().getSupportActionBar().setDisplayHomeAsUpEnabled(enableButtonBack());
+            getBaseActivity().getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
         } else {
             getBaseActivity().getToolbar().setVisibility(View.GONE);
-            getBaseActivity().getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
-            getBaseActivity().getSupportActionBar().setDisplayHomeAsUpEnabled(enableButtonBack());
         }
     }
 
@@ -58,6 +65,7 @@ public abstract class BaseFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
+                Toast.makeText(getBaseActivity(), "Aloha", Toast.LENGTH_LONG).show();
                 onBackPressed();
                 break;
         }
