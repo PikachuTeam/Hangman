@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.MessageFormat;
 import java.util.Random;
@@ -38,11 +39,13 @@ public class PlayFragment extends BaseFragment implements Keys.OnKeysDownListene
     private TextView textViewHint;
     private TextView textViewTopic;
     private TextView textViewScore;
+    private TextView textViewStar;
     private LinearLayout guessArea;
     private LinearLayout topArea;
     private LinearLayout middleArea;
     private LinearLayout bottomArea;
     private NotifyDialog dialog;
+    private int currentStar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -54,10 +57,12 @@ public class PlayFragment extends BaseFragment implements Keys.OnKeysDownListene
 
     private void init() {
         lives = 7;
+        currentStar = 10;
         guessedWord = 0;
         getData();
 
         textViewTopic.setText(MessageFormat.format(getString(R.string.topic), topic));
+        textViewStar.setText("" + currentStar);
         initWord();
         initKeyboard();
         hangmanImage.setImageResource(R.drawable.hangman_1);
@@ -82,6 +87,7 @@ public class PlayFragment extends BaseFragment implements Keys.OnKeysDownListene
         textViewHint = (TextView) rootView.findViewById(R.id.textViewHint);
         textViewTopic = (TextView) rootView.findViewById(R.id.textViewTopic);
         textViewScore = (TextView) rootView.findViewById(R.id.textViewScore);
+        textViewStar = (TextView) rootView.findViewById(R.id.textViewStar);
         guessArea = (LinearLayout) rootView.findViewById(R.id.guessArea);
         topArea = (LinearLayout) rootView.findViewById(R.id.topArea);
         middleArea = (LinearLayout) rootView.findViewById(R.id.middleArea);
@@ -94,15 +100,27 @@ public class PlayFragment extends BaseFragment implements Keys.OnKeysDownListene
     @Override
     public void onClick(View v) {
         if (v == buttonHint) {
-            textViewHint.setVisibility(View.VISIBLE);
+            if (currentStar > 0) {
+                textViewHint.setVisibility(View.VISIBLE);
+                currentStar -= 2;
+                textViewStar.setText("" + currentStar);
+            } else {
+                Toast.makeText(getBaseActivity(), "You run out of star", Toast.LENGTH_SHORT).show();
+            }
         } else if (v == buttonShowLetter) {
-            int i = 0;
-            do {
-                i = random.nextInt(letters.length);
-            } while (letters[i].isShowed);
-            letters[i].showLetter();
-            if (isPassed()) {
-                dialog.show(2, question.getWord());
+            if (currentStar > 0) {
+                int i = 0;
+                do {
+                    i = random.nextInt(letters.length);
+                } while (letters[i].isShowed);
+                letters[i].showLetter();
+                if (isPassed()) {
+                    dialog.show(2, question.getWord());
+                }
+                currentStar--;
+                textViewStar.setText("" + currentStar);
+            } else {
+                Toast.makeText(getBaseActivity(), "You run out of star", Toast.LENGTH_SHORT).show();
             }
         }
     }
