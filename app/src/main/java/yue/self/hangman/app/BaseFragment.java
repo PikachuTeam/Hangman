@@ -17,6 +17,8 @@ import yue.self.hangman.R;
  */
 public abstract class BaseFragment extends Fragment {
 
+    public final static int DELAY_TIME = 300;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +80,20 @@ public abstract class BaseFragment extends Fragment {
 
     public void replaceFragment(BaseFragment newFragment, String fragmentTag, String transactionName) {
         replaceFragment(getFragmentManager(), newFragment, fragmentTag, transactionName);
+    }
+
+    public void replaceFragmentWithAnim(BaseFragment newFragment, int enter, int exit, int popEnter, int popExit, Bundle bundle) {
+        newFragment.setArguments(bundle);
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(enter, exit, popEnter, popExit);
+        transaction.replace(R.id.fragmentContainer, newFragment, newFragment.getClass().getName());
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    public void replaceFragment(BaseFragment fragment, Bundle bundle) {
+        fragment.setArguments(bundle);
+        replaceFragment(fragment);
     }
 
     public static void replaceFragment(FragmentManager manager, BaseFragment newFragment, String fragmentTag,
