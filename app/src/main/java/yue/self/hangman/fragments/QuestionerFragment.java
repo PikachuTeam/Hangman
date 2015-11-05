@@ -20,6 +20,8 @@ public class QuestionerFragment extends BaseFragment implements View.OnClickList
 
     private static int currentQuestioner;
     private static int currentAnswerer;
+    private static int score1;
+    private static int score2;
     private EditText editTextWord;
     private TextView textViewTest;
     private String player1;
@@ -32,6 +34,8 @@ public class QuestionerFragment extends BaseFragment implements View.OnClickList
         loadData();
         currentQuestioner = PLAYER_1;
         currentAnswerer = PLAYER_2;
+        score1 = 0;
+        score2 = 0;
     }
 
     @Override
@@ -67,7 +71,7 @@ public class QuestionerFragment extends BaseFragment implements View.OnClickList
         buttonOk.setOnClickListener(this);
     }
 
-    public static void update(){
+    public static void update(int playerScore1, int playerScore2) {
         switch (currentAnswerer) {
             case PLAYER_1:
                 currentQuestioner = PLAYER_1;
@@ -78,6 +82,8 @@ public class QuestionerFragment extends BaseFragment implements View.OnClickList
                 currentAnswerer = PLAYER_1;
                 break;
         }
+        score1 = playerScore1;
+        score2 = playerScore2;
     }
 
     @Override
@@ -85,6 +91,8 @@ public class QuestionerFragment extends BaseFragment implements View.OnClickList
         Bundle bundle = new Bundle();
         bundle.putInt("Questioner", currentQuestioner);
         bundle.putInt("Answerer", currentAnswerer);
+        bundle.putInt("Score1", score1);
+        bundle.putInt("Score2", score2);
         bundle.putString("Player1", player1);
         bundle.putString("Player2", player2);
         bundle.putString("Word", editTextWord.getText().toString().toUpperCase().trim());

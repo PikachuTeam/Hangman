@@ -52,6 +52,7 @@ public class PlayFragment extends BaseFragment implements Keys.OnKeysDownListene
         View view = inflater.inflate(R.layout.fragment_play, container, false);
         findViews(view);
         init();
+        changeImage();
         return view;
     }
 
@@ -65,7 +66,6 @@ public class PlayFragment extends BaseFragment implements Keys.OnKeysDownListene
         textViewStar.setText("" + currentStar);
         initWord();
         initKeyboard();
-        hangmanImage.setImageResource(R.drawable.hangman_1);
 
         random = new Random();
 
@@ -199,6 +199,9 @@ public class PlayFragment extends BaseFragment implements Keys.OnKeysDownListene
 
     private void changeImage() {
         switch (lives) {
+            case 7:
+                hangmanImage.setImageResource(R.drawable.hangman_1);
+                break;
             case 6:
                 hangmanImage.setImageResource(R.drawable.hangman_2);
                 break;
