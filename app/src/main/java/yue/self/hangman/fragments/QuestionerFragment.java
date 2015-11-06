@@ -19,11 +19,10 @@ public class QuestionerFragment extends BaseFragment implements View.OnClickList
     public final static int PLAYER_1 = 1, PLAYER_2 = 2;
 
     private static int currentQuestioner;
-    private static int currentAnswerer;
     private static int score1;
     private static int score2;
     private EditText editTextWord;
-    private TextView textViewTest;
+    private TextView textViewQuestioner;
     private String player1;
     private String player2;
     private Button buttonOk;
@@ -33,7 +32,6 @@ public class QuestionerFragment extends BaseFragment implements View.OnClickList
         super.onCreate(savedInstanceState);
         loadData();
         currentQuestioner = PLAYER_1;
-        currentAnswerer = PLAYER_2;
         score1 = 0;
         score2 = 0;
     }
@@ -43,9 +41,9 @@ public class QuestionerFragment extends BaseFragment implements View.OnClickList
         View view = inflater.inflate(R.layout.fragment_questioner, container, false);
         findViews(view);
         if (currentQuestioner == PLAYER_1) {
-            textViewTest.setText("Player 1");
+            textViewQuestioner.setText(player1);
         } else {
-            textViewTest.setText("Player 2");
+            textViewQuestioner.setText(player2);
         }
         return view;
     }
@@ -65,21 +63,19 @@ public class QuestionerFragment extends BaseFragment implements View.OnClickList
 
     private void findViews(View rootView) {
         editTextWord = (EditText) rootView.findViewById(R.id.editTextWord);
-        textViewTest = (TextView) rootView.findViewById(R.id.textViewTest);
+        textViewQuestioner = (TextView) rootView.findViewById(R.id.textViewQuestioner);
         buttonOk = (Button) rootView.findViewById(R.id.buttonOk);
 
         buttonOk.setOnClickListener(this);
     }
 
     public static void update(int playerScore1, int playerScore2) {
-        switch (currentAnswerer) {
+        switch (currentQuestioner) {
             case PLAYER_1:
-                currentQuestioner = PLAYER_1;
-                currentAnswerer = PLAYER_2;
+                currentQuestioner = PLAYER_2;
                 break;
             case PLAYER_2:
-                currentQuestioner = PLAYER_2;
-                currentAnswerer = PLAYER_1;
+                currentQuestioner = PLAYER_1;
                 break;
         }
         score1 = playerScore1;
@@ -90,12 +86,12 @@ public class QuestionerFragment extends BaseFragment implements View.OnClickList
     public void onClick(View v) {
         Bundle bundle = new Bundle();
         bundle.putInt("Questioner", currentQuestioner);
-        bundle.putInt("Answerer", currentAnswerer);
         bundle.putInt("Score1", score1);
         bundle.putInt("Score2", score2);
         bundle.putString("Player1", player1);
         bundle.putString("Player2", player2);
         bundle.putString("Word", editTextWord.getText().toString().toUpperCase().trim());
+        editTextWord.setText("");
         replaceFragmentWithAnim(new AnswererFragment(), R.anim.card_flip_left_in, R.anim.card_flip_left_out, R.anim.card_flip_right_in, R.anim.card_flip_right_out, bundle);
     }
 }

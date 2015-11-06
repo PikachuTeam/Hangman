@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import yue.self.hangman.R;
 import yue.self.hangman.app.BaseFragment;
@@ -17,10 +18,9 @@ import yue.self.hangman.widget.NotifyDialog;
 /**
  * Created by dongc_000 on 11/3/2015.
  */
-public class AnswererFragment extends BaseFragment implements View.OnClickListener, Keys.OnKeysDownListener {
+public class AnswererFragment extends BaseFragment implements Keys.OnKeysDownListener, NotifyDialog.OnNotifyDialogButtonClickListener {
 
     private int currentQuestioner;
-    private int currentAnswerer;
     private String player1;
     private String player2;
     private int score1;
@@ -30,6 +30,10 @@ public class AnswererFragment extends BaseFragment implements View.OnClickListen
     private int lives;
     private String word;
 
+    private TextView textViewPlayer1;
+    private TextView textViewPlayer2;
+    private TextView textViewScore1;
+    private TextView textViewScore2;
     private ImageView hangmanImage;
     private LinearLayout guessArea;
     private LinearLayout topArea;
@@ -47,9 +51,7 @@ public class AnswererFragment extends BaseFragment implements View.OnClickListen
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_answerer, container, false);
         findViews(view);
-        initKeyboard();
-        initLetters();
-        changeImage();
+        init();
         return view;
     }
 
@@ -61,6 +63,21 @@ public class AnswererFragment extends BaseFragment implements View.OnClickListen
     @Override
     protected void onBackPressed() {
         getFragmentManager().popBackStack(PlayerFragment.TRANSACTION_NAME, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+    }
+
+    private void init() {
+        initKeyboard();
+        initLetters();
+
+        textViewPlayer1.setText(player1);
+        textViewPlayer2.setText(player2);
+        textViewScore1.setText("" + score1);
+        textViewScore2.setText("" + score2);
+
+        changeImage();
+
+        dialog = new NotifyDialog(getBaseActivity());
+        dialog.setOnNotifyDialogButtonClickListener(this);
     }
 
     private void initData() {
@@ -142,27 +159,81 @@ public class AnswererFragment extends BaseFragment implements View.OnClickListen
         topArea = (LinearLayout) rootView.findViewById(R.id.topArea);
         middleArea = (LinearLayout) rootView.findViewById(R.id.middleArea);
         bottomArea = (LinearLayout) rootView.findViewById(R.id.bottomArea);
+        textViewPlayer1 = (TextView) rootView.findViewById(R.id.textViewPlayer1);
+        textViewPlayer2 = (TextView) rootView.findViewById(R.id.textViewPlayer2);
+        textViewScore1 = (TextView) rootView.findViewById(R.id.textViewScore1);
+        textViewScore2 = (TextView) rootView.findViewById(R.id.textViewScore2);
     }
 
     private void loadData() {
         Bundle bundle = getArguments();
         if (bundle != null) {
             currentQuestioner = bundle.getInt("Questioner");
-            currentAnswerer = bundle.getInt("Answerer");
             player1 = bundle.getString("Player1");
             player2 = bundle.getString("Player2");
+            score1 = bundle.getInt("Score1");
+            score2 = bundle.getInt("Score2");
             word = bundle.getString("Word");
         }
     }
 
-    @Override
-    public void onClick(View v) {
-        QuestionerFragment.update(score1, score2);
-        getFragmentManager().popBackStack();
+    private boolean isPassed() {
+        for (int i = 0; i < word.length(); i++) {
+            if (!letters[i].isShowed) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void update(int status) {
+        switch (status) {
+            case 1:
+                if (currentQuestioner == QuestionerFragment.PLAYER_1) {
+                    score2++;
+                    textViewScore2.setText("" + score2);
+                } else {
+                    score1++;
+                    textViewScore1.setText("" + score1);
+                }
+                break;
+            case 2:
+                if (currentQuestioner == QuestionerFragment.PLAYER_1) {
+                    score1++;
+                    textViewScore1.setText("" + score1);
+                } else {
+                    score2++;
+                    textViewScore2.setText("" + score2);
+                }
+                break;
+        }
     }
 
     @Override
     public void onKeysDown(Keys keys) {
+        keys.checkLetter(word);
+        if (keys.isCorrect) {
+            for (int i = 0; i < word.length(); i++) {
+                letters[i].changeLetter(keys.getLetter());
+            }
+        } else {
+            lives--;
+            changeImage();
+        }
+        if (isPassed()) {
+            update(1);
+            dialog.show(2, word);
+        }
+        if (lives == 0) {
+            update(2);
+            dialog.show(1, word);
+        }
+    }
 
+    @Override
+    public void onNotifyDialogButtonClick(int button) {
+        QuestionerFragment.update(score1, score2);
+        getFragmentManager().popBackStack();
+        dialog.dismiss();
     }
 }

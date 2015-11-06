@@ -6,7 +6,7 @@
     android:background="#553421">
 
     <TextView
-        android:id="@+id/textViewTest"
+        android:id="@+id/textViewQuestioner"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center"
